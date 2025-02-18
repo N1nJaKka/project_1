@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Название сайта</title>
+    <!-- Стили CSS -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <!-- Шапка сайта -->
+    <header>
+      <div class="logo">
+        <a href="#"><img src="logo.png" alt="Логотип"></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Главная</a></li>
+          <li><a href="#">Тренеры</a></li>
+          <li><a href="#">Отзывы</a></li>
+          <li><a href="#">Запись на тренировку</a></li>
+          <li><a href="#">Статьи</a></li>
+        </ul>
+      </nav>
+      <!-- Поиск тренеров -->
+      <form action="#" method="get">
+        <input type="search" placeholder="Поиск тренеров" name="q">
+      </form>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main>
+      <section>
+        <!-- Карточки тренеров -->
+        <article class="trainer-card">
+          <figure>
+            <img src="..." alt="Фотография тренера">
+          </figure>
+          <h2>Имя тренера</h2>
+          <p>Специализация: ...</p>
+          <p>Описание: ...</p>
+        </article>
+        <!-- Другие карточки тренеров -->
+      </section>
+    </main>
+
+    <!-- Фильтрация и сортировка -->
+    <aside>
+      <h3>Фильтрация тренеров</h3>
+      <ul>
+        <li>Опыт: ...</li>
+        <li>Местоположение: ...</li>
+        <li>Стоимость занятий: ...</li>
+      </ul>
+      <button>Сортировать по рейтингу</button>
+      <button>Сортировать по популярности</button>
+    </aside>
+
+    <!-- Отзывы и рейтинги -->
+    <section>
+      <h1>Отзывы клиентов</h1>
+      <!-- Отзывы -->
+      <p>... </p>
+      <!-- Рейтинги тренеров -->
+    </section>
+
+    <!-- Запись на тренировку -->
+    <form action="..." method="post">
+      <label for="name">Имя:</label>
+      <input id="name" type="text" name="name"><br>
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email"><br>
+      <label for="phone">Телефон:</label>
+      <input id="phone" type="tel" name="phone"><br>
+      <select name="type">
+        <option value="consultation">Консультация</option>
+        <option value="trial-training">Пробная тренировка</option>
+      </select>
+      <button type="submit">Записаться</button>
+    </form>
+
+    <!-- Профиль тренера -->
+    <article>
+      <figure>
+        <img src="..." alt="Фото тренера">
+      </figure>
+      <h2>Профиль тренера</h2>
+      <p>Имя: ...</p>
+      <p>Контакты: ...</p>
+      <p>Расписание занятий: ...</p>
+    </article>
+
+    <!-- Статьи и советы -->
+    <section>
+      <h1>Полезные статьи</h1>
+      <!-- Статьи -->
+      <article>...</article>
+      <!-- Советы -->
+    </section>
+  </body>
+</html>
