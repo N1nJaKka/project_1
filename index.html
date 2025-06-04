@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тренер-навигатор</title>
+    <title>Тренер-навигатор: Найдите своего идеального тренера</title>
+    <meta name="description" content="Онлайн-сервис «Тренер-навигатор» поможет вам найти идеального фитнес-тренера, йога-инструктора или коуча по развитию. Отзывы, рейтинг и удобный поиск.">
+    <meta name="keywords" content="тренер, навигатор, фитнес, йога, плавание, коуч, онлайн, поиск, персональный тренер, спортивный тренер, развитие">
+
+    <meta property="og:title" content="Тренер-навигатор: Найдите своего идеального тренера">
+    <meta property="og:description" content="Онлайн-сервис для поиска и выбора тренеров в различных областях.">
+    <meta property="og:image" content="https://placehold.co/1200x630/cccccc/333333?text=Тренер-Навигатор"> <!-- Замените на реальное изображение -->
+    <meta property="og:url" content="https://ваш-сайт.ru"> <!-- Замените на реальный URL вашего сайта -->
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -32,7 +41,7 @@
         width: 50px;
         height: 50px;
         border: 5px solid rgba(0, 0, 0, 0.1);
-        border-top-color: #007bff; /* Цвет спиннера */
+        border-top-color: #007bff;
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
@@ -52,7 +61,7 @@
       }
 
       .scroll-to-top-btn {
-        display: none; /* Скрыта по умолчанию */
+        display: none;
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -99,7 +108,7 @@
       .swiper-container {
         width: 100%;
         height: auto;
-        padding-bottom: 40px; /* Для пагинации */
+        padding-bottom: 40px;
       }
 
       .swiper-slide {
@@ -113,7 +122,7 @@
 
       @media (max-width: 768px) {
         .swiper-slide {
-          height: auto; /* Автоматическая высота для мобильных */
+          height: auto;
         }
       }
 
@@ -237,12 +246,12 @@
             <li class="footer__team-member">Денисов Андрей (РК-42)</li>
           </ul>
         </div>
-        <p class="footer__copyright">© 2025 Тренер-навигатор. Все права защищены.</p>
+        <p class="footer__copyright">© <span id="current-year"></span> Тренер-навигатор. Все права защищены.</p>
       </footer>
 
       <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-    </div> <!-- Конец .content -->
+    </div>
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="scripts.js"></script>
