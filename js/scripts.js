@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (preloader && content) {
             preloader.classList.add('preloader--hidden');
             content.classList.remove('content--hidden');
-            // Удаляем предзагрузчик из DOM после завершения анимации
             preloader.addEventListener('transitionend', () => {
                 preloader.remove();
             });
@@ -66,14 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (filterForm) {
         filterForm.addEventListener('change', saveFiltersToLocalStorage);
-        filterForm.addEventListener('input', saveFiltersToLocalStorage); // Для текстовых полей
+        filterForm.addEventListener('input', saveFiltersToLocalStorage);
     }
 
 
     const trainerCardsContainer = document.getElementById('trainer-cards-container');
     const trainerTitlesList = document.getElementById('trainer-titles-list');
-    let allTrainerCardsData = []; // Для хранения данных о тренерах
-
+    let allTrainerCardsData = [];
     async function loadTrainers() {
         try {
             const response = await fetch('data.json');
@@ -85,8 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             renderTrainerCards(allTrainerCardsData);
             extractAndDisplayTrainerTitles(allTrainerCardsData);
-            initializeSwiper(); // Инициализируем Swiper после загрузки и рендеринга карточек
-
+            initializeSwiper();
         } catch (error) {
             console.error("Не удалось загрузить данные о тренерах:", error);
             if (trainerCardsContainer) {
@@ -98,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderTrainerCards(trainers) {
         if (!trainerCardsContainer) return;
 
-        trainerCardsContainer.innerHTML = ''; // Очищаем контейнер перед добавлением
+        trainerCardsContainer.innerHTML = '';
         if (trainers.length === 0) {
             trainerCardsContainer.innerHTML = '<p>Тренеры не найдены по заданным критериям.</p>';
             return;
@@ -106,11 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         trainers.forEach(trainer => {
             const trainerCard = document.createElement('div');
-            trainerCard.classList.add('trainer-card', 'swiper-slide'); // Добавляем класс swiper-slide
+            trainerCard.classList.add('trainer-card', 'swiper-slide');
             trainerCard.setAttribute('data-specialization', trainer.specialization);
             trainerCard.setAttribute('data-location', trainer.location);
             trainerCard.setAttribute('data-cost', trainer.cost);
-            trainerCard.setAttribute('data-experience', trainer.experience); // Для фильтрации по опыту
+            trainerCard.setAttribute('data-experience', trainer.experience);
 
             trainerCard.innerHTML = `
                 <figure class="trainer-card__figure">
@@ -132,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function extractAndDisplayTrainerTitles(trainers) {
         if (!trainerTitlesList) return;
 
-        trainerTitlesList.innerHTML = ''; // Очищаем список
-        const trainerNames = trainers.map(trainer => trainer.name); // Формируем массив имен
+        trainerTitlesList.innerHTML = '';
+        const trainerNames = trainers.map(trainer => trainer.name);
 
         if (trainerNames.length > 0) {
             trainerNames.forEach(name => {
@@ -177,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderPopularArticles() {
         if (!popularArticlesContainer) return;
 
-        popularArticlesContainer.innerHTML = ''; // Очищаем контейнер
+        popularArticlesContainer.innerHTML = '';
 
         popularArticlesData.forEach(article => {
             const articleItem = document.createElement('div');
@@ -196,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', function() {
         if (scrollToTopBtn) {
-            if (window.pageYOffset > 300) { // Показываем кнопку, если прокручено более 300px
+            if (window.pageYOffset > 300) { 
                 scrollToTopBtn.style.display = 'block';
             } else {
                 scrollToTopBtn.style.display = 'none';
@@ -214,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    let mySwiper; // Объявляем переменную для экземпляра Swiper
+    let mySwiper;
 
     function initializeSwiper() {
         if (mySwiper) {
@@ -227,19 +224,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 slidesPerView: 1, // Показываем по одной карточке по умолчанию
                 spaceBetween: 20, // Расстояние между слайдами
 
-                // If we need pagination
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
 
-                // Navigation arrows
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
 
-                // And if we need scrollbar
                 scrollbar: {
                     el: '.swiper-scrollbar',
                 },
@@ -274,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (applyFiltersButton) {
         applyFiltersButton.addEventListener('click', function(event) {
-            event.preventDefault(); // Предотвращаем стандартную отправку формы
+            event.preventDefault();
             console.log("Кнопка 'Применить фильтры' нажата!");
             const selectedSpecialization = specializationSelect ? specializationSelect.value : '';
             const selectedExperience = Array.from(experienceFilters).find(radio => radio.checked)?.value || 'any';
@@ -289,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 let matchesExperience = true;
                 if (selectedExperience !== 'any') {
-                    const trainerExpYears = parseFloat(trainer.experience.split(' ')[0]); // Извлекаем число лет
+                    const trainerExpYears = parseFloat(trainer.experience.split(' ')[0]);
                     if (selectedExperience === '1-3') {
                         matchesExperience = trainerExpYears >= 1 && trainerExpYears <= 3;
                     } else if (selectedExperience === '3-5') {
@@ -302,40 +296,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 return matchesSpecialization && matchesLocation && matchesCost && matchesExperience;
             });
             renderTrainerCards(filteredTrainers);
-            initializeSwiper(); // Переинициализируем Swiper после фильтрации
+            initializeSwiper();
         });
     }
 
-    const trainerLinks = document.querySelectorAll('.trainer-card__link');
-    trainerLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            const href = this.getAttribute('href');
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('trainer-card__link')) {
+            const href = event.target.getAttribute('href');
             if (href && href.startsWith('#')) {
-                 event.preventDefault(); // Предотвращаем стандартный переход по якорю для демонстрации
+                event.preventDefault();
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
                 console.log(`Нажата ссылка "Подробнее о тренере" для: ${targetId}`);
                 if (targetElement) {
-                     targetElement.scrollIntoView({ behavior: 'smooth' });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             }
-        });
+        }
     });
 
-    const trainerCardsForMouseover = document.querySelectorAll('.trainer-card');
-    trainerCardsForMouseover.forEach(card => {
-        card.addEventListener('mouseover', function() {
-            const trainerNameElement = card.querySelector('.trainer-card__name');
+
+    document.body.addEventListener('mouseover', function(event) {
+        const trainerCard = event.target.closest('.trainer-card');
+        if (trainerCard) {
+            const trainerNameElement = trainerCard.querySelector('.trainer-card__name');
             const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
             console.log(`Мышь наведена на карточку тренера: ${trainerName}`);
-        });
-        card.addEventListener('mouseout', function() {
-            const trainerNameElement = card.querySelector('.trainer-card__name');
+        }
+    });
+    document.body.addEventListener('mouseout', function(event) {
+        const trainerCard = event.target.closest('.trainer-card');
+        if (trainerCard) {
+            const trainerNameElement = trainerCard.querySelector('.trainer-card__name');
             const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
             // console.log(`Мышь убрана с карточки тренера: ${trainerName}`); // Раскомментируйте, если нужно
-        });
+        }
     });
 
-    loadTrainers(); // Загружаем тренеров из JSON
-    renderPopularArticles(); // Рендерим динамический блок статей
+
+    loadTrainers();
+    renderPopularArticles();
 });
