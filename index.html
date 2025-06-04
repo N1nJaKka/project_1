@@ -7,6 +7,31 @@
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+      .header, .footer { background-color: #333; color: white; padding: 1em 0; text-align: center; }
+      .header__logo img { max-width: 150px; }
+      .header__navigation-list, .footer__navigation-list, .footer__social-list, .footer__team-list { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; gap: 15px; }
+      .header__navigation-link, .footer__navigation-link, .footer__social-link { color: white; text-decoration: none; }
+      .header__search { margin-top: 10px; }
+      .header__search-input { padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
+      .header__search-button { padding: 8px 15px; background-color: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; }
+      .main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+      .trainers__heading, .reviews__heading, .booking__heading, .articles__heading, .trainer-profile__heading { text-align: center; margin-bottom: 20px; color: #333; }
+      .trainer-card, .review-item, .article-item, .trainer-profile__content { background-color: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      .trainer-card__image, .trainer-profile__image { border-radius: 50%; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
+      .trainer-card__name, .trainer-profile__name { text-align: center; color: #555; }
+      .trainer-card__link, .article-item__link, .trainer-profile__book-button, .filter-form__button, .sort-options__button, .booking-form__button { display: inline-block; margin-top: 10px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
+      .trainer-card__link:hover, .article-item__link:hover, .trainer-profile__book-button:hover, .filter-form__button:hover, .sort-options__button:hover, .booking-form__button:hover { background-color: #0056b3; }
+      .filter-sidebar { background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+      .filter-form__fieldset { margin-bottom: 15px; border: 1px solid #ccc; padding: 10px; border-radius: 4px; }
+      .filter-form__legend { font-weight: bold; }
+      .filter-form__label, .booking-form__label { display: block; margin-bottom: 5px; }
+      .filter-form__input, .filter-form__select, .booking-form__input, .booking-form__select, .booking-form__textarea { width: calc(100% - 22px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+      .footer__team-member { font-size: 0.9em; }
+      .footer__copyright { text-align: center; margin-top: 20px; font-size: 0.8em; }
+      .fab { margin-right: 5px; }
+    </style>
   </head>
   <body>
 
@@ -18,7 +43,7 @@
       </div>
       <nav class="header__navigation">
         <ul class="header__navigation-list">
-          <li class="header__navigation-item"><a href="#main" class="header__navigation-link">Главная</a></li>
+          <li class="header__navigation-item"><a href="#main-content" class="header__navigation-link">Главная</a></li>
           <li class="header__navigation-item"><a href="#trainers" class="header__navigation-link">Тренеры</a></li>
           <li class="header__navigation-item"><a href="#reviews" class="header__navigation-link">Отзывы</a></li>
           <li class="header__navigation-item"><a href="#booking" class="header__navigation-link">Запись на тренировку</a></li>
@@ -31,7 +56,7 @@
       </form>
     </header>
 
-    <main class="main" id="main">
+    <main class="main" id="main-content">
       <section class="trainers" id="trainers">
         <h1 class="trainers__heading">Наши тренеры</h1>
         <article class="trainer-card">
@@ -189,6 +214,37 @@
           <button type="button" class="trainer-profile__book-button">Записаться на тренировку к Ивану</button>
         </article>
       </section>
+      
+      <section class="trainer-profile" id="trainer-profile-elena">
+        <h1 class="trainer-profile__heading">Профиль тренера: Елена Смирнова</h1>
+        <article class="trainer-profile__content">
+          <figure class="trainer-profile__figure">
+            <img src="https://placehold.co/300x300/e0e0e0/000000?text=Елена+Смирнова+Полный" alt="Фото тренера Елены Смирновой" class="trainer-profile__image" width="300" height="300">
+            <figcaption class="trainer-profile__caption">Елена Смирнова - Ваш инструктор по йоге</figcaption>
+          </figure>
+          <h2 class="trainer-profile__name">Елена Смирнова</h2>
+          <p class="trainer-profile__specialization"><strong>Специализация:</strong> Йога (Хатха, Виньяса), Пилатес, Медитация, Стретчинг.</p>
+          <p class="trainer-profile__experience"><strong>Опыт работы:</strong> 7 лет преподавания.</p>
+          <p class="trainer-profile__education"><strong>Образование:</strong> Сертифицированный инструктор йоги (RYT 200), курсы по пилатесу и техникам медитации.</p>
+          <h3 class="trainer-profile__contacts-heading">Контакты:</h3>
+          <ul class="trainer-profile__contact-list">
+            <li class="trainer-profile__contact-item">Email: <a href="mailto:elena.smirnova@example.com" class="trainer-profile__contact-link">elena.smirnova@example.com</a></li>
+            <li class="trainer-profile__contact-item">Телефон: <a href="tel:+79997654321" class="trainer-profile__contact-link">+7 (999) 765-43-21</a></li>
+            <li class="trainer-profile__contact-item">Социальные сети:
+              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-instagram"></i> Instagram</a>,
+              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-vk"></i> VKontakte</a>
+            </li>
+          </ul>
+          <h3 class="trainer-profile__schedule-heading">Расписание занятий:</h3>
+          <p class="trainer-profile__schedule-text">Индивидуальные и групповые занятия. Утренние и вечерние классы. Свяжитесь для уточнения актуального расписания.</p>
+          <h3 class="trainer-profile__reviews-heading">Отзывы:</h3>
+          <blockquote class="trainer-profile__quote">
+            <p class="trainer-profile__quote-text">"Занятия с Еленой - это всегда заряд позитива и энергии! Она очень внимательный и грамотный инструктор."</p>
+            <cite class="trainer-profile__quote-cite">— Марина В.</cite>
+          </blockquote>
+          <button type="button" class="trainer-profile__book-button" data-trainer-name="Елена Смирнова">Записаться на занятие к Елене</button>
+        </article>
+      </section>
 
       <section class="articles" id="articles">
         <h1 class="articles__heading">Полезные статьи и советы</h1>
@@ -229,6 +285,6 @@
       </div>
       <p class="footer__copyright">&copy; 2025 Тренер-навигатор. Все права защищены.</p>
     </footer>
-
+    <script src="scripts/script.js"></script>
   </body>
 </html>
