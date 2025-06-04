@@ -1,60 +1,79 @@
-// Убедимся, что DOM полностью загружен, прежде чем выполнять скрипт
 document.addEventListener('DOMContentLoaded', function() {
-    // Выводим сообщение в консоль, чтобы подтвердить, что скрипт загружен и DOM готов
     console.log("Файл script.js для 'Тренер-навигатор' загружен, DOM готов!");
 
-    // Пример: Добавляем обработчик клика для кнопки поиска в шапке
+    const filterForm = document.querySelector('.filter-form');
+    const trainerCardsContainer = document.getElementById('trainers'); // Контейнер, где находятся все карточки
+    let allTrainerCards = []; // Будет содержать все карточки тренеров для фильтрации
+    if (trainerCardsContainer) {
+        allTrainerCards = Array.from(trainerCardsContainer.querySelectorAll('.trainer-card'));
+    }
+
+    const experienceFilters = filterForm ? filterForm.querySelectorAll('input[name="experience"]') : [];
+    const locationFilter = filterForm ? filterForm.querySelector('#location-select') : null;
+    const costMinFilter = filterForm ? filterForm.querySelector('#cost-min') : null;
+    const costMaxFilter = filterForm ? filterForm.querySelector('#cost-max') : null;
+    const applyFiltersButton = filterForm ? filterForm.querySelector('.filter-form__button') : null;
+
+
     const searchButton = document.querySelector('.header__search-button');
     if (searchButton) {
         searchButton.addEventListener('click', function(event) {
             // event.preventDefault(); // Раскомментируйте, если хотите предотвратить стандартную отправку формы для теста
             console.log("Кнопка поиска в шапке нажата!");
-            // Здесь будет логика для обработки поиска (например, AJAX запрос или фильтрация на клиенте)
         });
     }
 
-    // Пример: Добавляем обработчик клика для кнопки "Применить фильтры"
-    const filterButton = document.querySelector('.filter-form__button');
-    if (filterButton) {
-        filterButton.addEventListener('click', function(event) {
+    if (applyFiltersButton) {
+        applyFiltersButton.addEventListener('click', function(event) {
             event.preventDefault(); // Фильтры обычно не отправляют форму на новую страницу
             console.log("Кнопка 'Применить фильтры' нажата!");
-            // Здесь будет логика для сбора значений фильтров и обновления списка тренеров
+            let selectedExperience = '';
+            experienceFilters.forEach(radio => {
+                if (radio.checked) {
+                    selectedExperience = radio.value;
+                }
+            });
+            const selectedLocation = locationFilter ? locationFilter.value : '';
+            const minCost = costMinFilter ? parseInt(costMinFilter.value, 10) : null;
+            const maxCost = costMaxFilter ? parseInt(costMaxFilter.value, 10) : null;
+
+            console.log("Выбранный опыт:", selectedExperience);
+            console.log("Выбранное местоположение:", selectedLocation);
+            console.log("Мин. стоимость:", minCost);
+            console.log("Макс. стоимость:", maxCost);
+
         });
     }
 
-    // Пример: Добавляем обработчик клика для кнопки отправки формы записи
     const bookingButton = document.querySelector('.booking-form__button');
     if (bookingButton) {
         bookingButton.addEventListener('click', function(event) {
             // event.preventDefault(); // Раскомментируйте, если будете обрабатывать отправку только через JS (AJAX)
             console.log("Кнопка отправки формы записи нажата!");
-            // Здесь будет логика для валидации формы и ее отправки
         });
     }
 
-    // Пример: Добавляем обработчик клика для кнопки "Записаться на тренировку к Ивану" в профиле тренера
-    const trainerProfileBookButton = document.querySelector('.trainer-profile__book-button');
-    if (trainerProfileBookButton) {
-        trainerProfileBookButton.addEventListener('click', function() {
-            console.log("Кнопка 'Записаться на тренировку' в профиле тренера нажата!");
-            // Здесь может быть логика для плавной прокрутки к форме записи
-            // или открытия модального окна с формой, предварительно заполнив имя тренера.
+    const trainerProfileBookButtons = document.querySelectorAll('.trainer-profile__book-button');
+    trainerProfileBookButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const trainerName = this.dataset.trainerName || this.textContent.replace('Записаться на тренировку к ', '').replace('Записаться на занятие к ', '');
+            console.log(`Кнопка 'Записаться на тренировку' в профиле тренера '${trainerName}' нажата!`);
             const bookingSection = document.getElementById('booking');
             if (bookingSection) {
                 bookingSection.scrollIntoView({ behavior: 'smooth' });
-                // Можно также попытаться предварительно выбрать тренера в форме, если это необходимо
                 const trainerSelect = document.getElementById('trainer-select');
                 if (trainerSelect) {
-                    // Предполагаем, что value для Ивана Петрова - "ivan-petrov"
-                    // Это значение нужно будет согласовать с реальными value в select
-                    // trainerSelect.value = "ivan-petrov";
+                    if (trainerName.includes('Иван Петров') && trainerSelect.querySelector('option[value="ivan-petrov"]')) {
+                        trainerSelect.value = "ivan-petrov";
+                    } else if (trainerName.includes('Елена Смирнова') && trainerSelect.querySelector('option[value="elena-smirnova"]')) {
+                        trainerSelect.value = "elena-smirnova";
+                    }
                 }
             }
         });
-    }
+    });
 
-    // Пример: Плавная прокрутка для навигационных ссылок в шапке
+
     const headerNavLinks = document.querySelectorAll('.header__navigation-link');
     headerNavLinks.forEach(link => {
         link.addEventListener('click', function(event) {
@@ -74,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-     // Пример: Плавная прокрутка для навигационных ссылок в подвале
     const footerNavLinks = document.querySelectorAll('.footer__navigation-link');
     footerNavLinks.forEach(link => {
         link.addEventListener('click', function(event) {
@@ -94,19 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // Вы можете добавить здесь другие базовые обработчики или функции для проверки.
-    // Например, для кнопок сортировки, ссылок "Подробнее о тренере" и т.д.
-
-    // Пример для кнопок сортировки
     const sortButtons = document.querySelectorAll('.sort-options__button');
     sortButtons.forEach(button => {
         button.addEventListener('click', function() {
             console.log(`Нажата кнопка сортировки: ${this.textContent}`);
-            // Логика сортировки будет добавлена позже
         });
     });
 
-    // Пример для ссылок "Подробнее о тренере"
     const trainerDetailLinks = document.querySelectorAll('.trainer-card__link');
     trainerDetailLinks.forEach(link => {
         link.addEventListener('click', function(event) {
@@ -124,5 +136,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    const trainerCardsForMouseover = document.querySelectorAll('.trainer-card');
+    trainerCardsForMouseover.forEach(card => {
+        card.addEventListener('mouseover', function() {
+            const trainerNameElement = card.querySelector('.trainer-card__name');
+            const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
+            console.log(`Мышь наведена на карточку тренера: ${trainerName}`);
+        });
+        card.addEventListener('mouseout', function() {
+            const trainerNameElement = card.querySelector('.trainer-card__name');
+            const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
+            // console.log(`Мышь убрана с карточки тренера: ${trainerName}`); // Раскомментируйте, если нужно
+        });
+    });
 
-}); // Конец обработчика DOMContentLoaded
+
+}); 
