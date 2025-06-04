@@ -9,12 +9,12 @@
 
     <meta property="og:title" content="Тренер-навигатор: Найдите своего идеального тренера">
     <meta property="og:description" content="Онлайн-сервис для поиска и выбора тренеров в различных областях.">
-    <meta property="og:image" content="images/unnamed.png"> <!-- Замените на реальное изображение -->
-    <meta property="og:url" content="https://ваш-сайт.ru"> <!-- Замените на реальный URL вашего сайта -->
+    <meta property="og:image" content="images/unnamed.png">
+    <meta property="og:url" content="https://ваш-сайт.ru">
     <meta property="og:type" content="website">
 
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
@@ -126,6 +126,47 @@
         }
       }
 
+      .section-padding {
+        padding: 60px 20px;
+        margin-bottom: 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .section-padding h2 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+      }
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .contact-info p {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .contact-info i {
+        color: #007bff;
+        font-size: 1.2em;
+      }
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.8;
+        text-align: justify;
+      }
+      .about-content h3 {
+        color: #28a745;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
@@ -137,13 +178,13 @@
       <header class="header">
         <div class="header__logo">
           <a href="#" class="header__logo-link">
-            <img src="https://placehold.co/150x50/cccccc/333333?text=Логотип" alt="Логотип Тренер-навигатор">
+            <img src="images/unnamed.png" alt="Логотип Тренер-навигатор" width="180" height="60">
           </a>
         </div>
         <nav class="header__navigation">
           <ul class="header__navigation-list">
             <li class="header__navigation-item"><a href="#trainers" class="header__navigation-link">Тренеры</a></li>
-            <li class="header__navigation-item"><a href="#articles" class="header__navigation-link">Статьи</a></li>
+            <li class="header__navigation-item"><a href="#popular-articles" class="header__navigation-link">Статьи</a></li>
             <li class="header__navigation-item"><a href="#about" class="header__navigation-link">О нас</a></li>
             <li class="header__navigation-item"><a href="#contact" class="header__navigation-link">Контакты</a></li>
           </ul>
@@ -213,14 +254,45 @@
       </main>
 
       <section id="trainer-titles-section" class="trainer-titles-section">
-        <h2 class="trainer-titles-section__heading">Список имен тренеров (динамически)</h2>
+        <h2 class="trainer-titles-section__heading">Список имен тренеров</h2>
         <ul id="trainer-titles-list" class="trainer-titles-list">
         </ul>
       </section>
 
       <section id="popular-articles" class="articles">
-        <h2 class="articles__heading">Популярные Статьи (динамически)</h2>
+        <h2 class="articles__heading">Популярные Статьи</h2>
         <div id="articles-container">
+        </div>
+      </section>
+
+      <section id="about" class="section-padding">
+        <h2>О нас</h2>
+        <div class="about-content">
+          <p>Добро пожаловать в «Тренер-навигатор» – ваш надежный помощник в поиске идеального наставника для достижения любых целей! Мы создали эту платформу, чтобы упростить процесс выбора квалифицированных тренеров и коучей в самых разных областях: от фитнеса и йоги до личностного роста и профессионального развития.</p>
+          <h3>Наша миссия</h3>
+          <p>Наша миссия — соединить людей, стремящихся к самосовершенствованию, с опытными специалистами, которые помогут им раскрыть свой потенциал. Мы верим, что каждый заслуживает качественного наставничества, и стремимся сделать этот процесс максимально доступным и прозрачным.</p>
+          <h3>Что мы предлагаем?</h3>
+          <ul>
+            <li><b>Обширная база тренеров:</b> Найдите специалистов по фитнесу, йоге, плаванию, коучингу, танцам, музыке и многому другому.</li>
+            <li><b>Подробные профили:</b> Ознакомьтесь с опытом, специализацией, отзывами и рейтингами каждого тренера.</li>
+            <li><b>Удобные фильтры:</b> Быстро найдите нужного специалиста по местоположению, стоимости, опыту и другим параметрам.</li>
+            <li><b>Отзывы и рейтинги:</b> Принимайте взвешенные решения, основываясь на опыте других пользователей.</li>
+            <li><b>Простой процесс записи:</b> Свяжитесь с тренером напрямую или запишитесь на пробную тренировку через платформу.</li>
+          </ul>
+          <h3>Наша команда</h3>
+          <p>Мы — команда энтузиастов, объединенных общей идеей сделать качественное наставничество доступным для всех. Мы постоянно работаем над улучшением платформы, добавляя новые функции и расширяя базу тренеров, чтобы вы всегда могли найти того, кто поможет вам двигаться вперед.</p>
+          <p>Присоединяйтесь к «Тренер-навигатору» и начните свой путь к новым достижениям уже сегодня!</p>
+        </div>
+      </section>
+
+      <section id="contact" class="section-padding">
+        <h2>Контакты</h2>
+        <div class="contact-info">
+          <p><i class="fas fa-map-marker-alt"></i> Адрес: г. Москва, ул. Примерная, д. 123, офис 45</p>
+          <p><i class="fas fa-phone"></i> Телефон: +7 (495) 123-45-67</p>
+          <p><i class="fas fa-envelope"></i> Email: info@trener-navigator.ru</p>
+          <p><i class="fas fa-clock"></i> Часы работы: Пн-Пт: 9:00 - 18:00</p>
+          <p>Если у вас есть вопросы или предложения, пожалуйста, свяжитесь с нами!</p>
         </div>
       </section>
 
@@ -254,6 +326,6 @@
     </div>
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>
