@@ -4,287 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тренер-навигатор</title>
-    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
-      body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
-      .header, .footer { background-color: #333; color: white; padding: 1em 0; text-align: center; }
-      .header__logo img { max-width: 150px; }
-      .header__navigation-list, .footer__navigation-list, .footer__social-list, .footer__team-list { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; gap: 15px; }
-      .header__navigation-link, .footer__navigation-link, .footer__social-link { color: white; text-decoration: none; }
-      .header__search { margin-top: 10px; }
-      .header__search-input { padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
-      .header__search-button { padding: 8px 15px; background-color: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; }
-      .main { padding: 20px; max-width: 1200px; margin: 0 auto; }
-      .trainers__heading, .reviews__heading, .booking__heading, .articles__heading, .trainer-profile__heading { text-align: center; margin-bottom: 20px; color: #333; }
-      .trainer-card, .review-item, .article-item, .trainer-profile__content { background-color: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-      .trainer-card__image, .trainer-profile__image { border-radius: 50%; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
-      .trainer-card__name, .trainer-profile__name { text-align: center; color: #555; }
-      .trainer-card__link, .article-item__link, .trainer-profile__book-button, .filter-form__button, .sort-options__button, .booking-form__button { display: inline-block; margin-top: 10px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
-      .trainer-card__link:hover, .article-item__link:hover, .trainer-profile__book-button:hover, .filter-form__button:hover, .sort-options__button:hover, .booking-form__button:hover { background-color: #0056b3; }
-      .filter-sidebar { background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-      .filter-form__fieldset { margin-bottom: 15px; border: 1px solid #ccc; padding: 10px; border-radius: 4px; }
-      .filter-form__legend { font-weight: bold; }
-      .filter-form__label, .booking-form__label { display: block; margin-bottom: 5px; }
-      .filter-form__input, .filter-form__select, .booking-form__input, .booking-form__select, .booking-form__textarea { width: calc(100% - 22px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-      .footer__team-member { font-size: 0.9em; }
-      .footer__copyright { text-align: center; margin-top: 20px; font-size: 0.8em; }
-      .fab { margin-right: 5px; }
+      .preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+      }
+
+      .preloader--hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #007bff; /* Цвет спиннера */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .content {
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .content--hidden {
+        opacity: 0;
+      }
+
+      .scroll-to-top-btn {
+        display: none; /* Скрыта по умолчанию */
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+      }
+
+      .scroll-to-top-btn:hover {
+        background-color: #0056b3;
+      }
+
+      .trainer-titles-section {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+      .trainer-titles-section__heading {
+        text-align: center;
+        color: #28a745;
+        margin-bottom: 15px;
+      }
+
+      .trainer-titles-list {
+        list-style: disc;
+        padding-left: 20px;
+      }
+
+      .trainer-titles-list__item {
+        margin-bottom: 5px;
+      }
+
+      .swiper-container {
+        width: 100%;
+        height: auto;
+        padding-bottom: 40px; /* Для пагинации */
+      }
+
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #eee;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        .swiper-slide {
+          height: auto; /* Автоматическая высота для мобильных */
+        }
+      }
+
     </style>
   </head>
   <body>
+    <div class="preloader">
+      <div class="spinner"></div>
+    </div>
 
-    <header class="header">
-      <div class="header__logo">
-        <a href="/" class="header__logo-link">
-          <img src="https://placehold.co/150x50/cccccc/333333?text=Логотип" alt="Логотип Тренер-навигатор" width="150" height="50">
-        </a>
-      </div>
-      <nav class="header__navigation">
-        <ul class="header__navigation-list">
-          <li class="header__navigation-item"><a href="#main-content" class="header__navigation-link">Главная</a></li>
-          <li class="header__navigation-item"><a href="#trainers" class="header__navigation-link">Тренеры</a></li>
-          <li class="header__navigation-item"><a href="#reviews" class="header__navigation-link">Отзывы</a></li>
-          <li class="header__navigation-item"><a href="#booking" class="header__navigation-link">Запись на тренировку</a></li>
-          <li class="header__navigation-item"><a href="#articles" class="header__navigation-link">Статьи</a></li>
-        </ul>
-      </nav>
-      <form action="/search" method="get" class="header__search">
-        <input type="search" placeholder="Поиск тренеров по имени или специализации" name="q" id="search-input" class="header__search-input">
-        <button type="submit" class="header__search-button">Найти</button>
-      </form>
-    </header>
-
-    <main class="main" id="main-content">
-      <section class="trainers" id="trainers">
-        <h1 class="trainers__heading">Наши тренеры</h1>
-        <article class="trainer-card">
-          <figure class="trainer-card__figure">
-            <img src="https://placehold.co/200x200/e0e0e0/000000?text=Тренер+Иван" alt="Фотография тренера Ивана Петрова" class="trainer-card__image" width="200" height="200">
-            <figcaption class="trainer-card__caption">Иван Петров</figcaption>
-          </figure>
-          <h2 class="trainer-card__name">Иван Петров</h2>
-          <p class="trainer-card__specialization"><strong>Специализация:</strong> Фитнес-тренер, персональные тренировки, похудение</p>
-          <p class="trainer-card__experience"><strong>Опыт:</strong> 10 лет</p>
-          <p class="trainer-card__location"><strong>Местоположение:</strong> Москва, Центр</p>
-          <p class="trainer-card__cost"><strong>Стоимость занятий:</strong> От 2000 руб./час</p>
-          <p class="trainer-card__description">Иван - сертифицированный фитнес-тренер с десятилетним опытом работы. Помогает клиентам достигать своих целей в фитнесе, будь то набор мышечной массы, похудение или улучшение общей физической формы. Разрабатывает индивидуальные программы тренировок и питания.</p>
-          <a href="#trainer-profile-ivan" class="trainer-card__link">Подробнее о тренере</a>
-        </article>
-
-        <article class="trainer-card">
-          <figure class="trainer-card__figure">
-            <img src="https://placehold.co/200x200/e0e0e0/000000?text=Тренер+Елена" alt="Фотография тренера Елены Смирновой" class="trainer-card__image" width="200" height="200">
-            <figcaption class="trainer-card__caption">Елена Смирнова</figcaption>
-          </figure>
-          <h2 class="trainer-card__name">Елена Смирнова</h2>
-          <p class="trainer-card__specialization"><strong>Специализация:</strong> Йога, пилатес, медитация</p>
-          <p class="trainer-card__experience"><strong>Опыт:</strong> 7 лет</p>
-          <p class="trainer-card__location"><strong>Местоположение:</strong> Санкт-Петербург, Петроградский район</p>
-          <p class="trainer-card__cost"><strong>Стоимость занятий:</strong> От 1500 руб./час</p>
-          <p class="trainer-card__description">Елена - опытный инструктор по йоге и пилатесу. Её занятия направлены на улучшение гибкости, силы и ментального здоровья. Проводит как групповые, так и индивидуальные сессии.</p>
-          <a href="#trainer-profile-elena" class="trainer-card__link">Подробнее о тренере</a>
-        </article>
-      </section>
-
-      <aside class="filter-sidebar">
-        <h3 class="filter-sidebar__heading">Фильтрация тренеров</h3>
-        <form class="filter-form">
-          <fieldset class="filter-form__fieldset">
-            <legend class="filter-form__legend">Опыт</legend>
-            <label for="experience-any" class="filter-form__label">Любой</label>
-            <input type="radio" id="experience-any" name="experience" value="any" checked class="filter-form__input">
-            <label for="experience-1-3" class="filter-form__label">1-3 года</label>
-            <input type="radio" id="experience-1-3" name="experience" value="1-3" class="filter-form__input">
-            <label for="experience-3-5" class="filter-form__label">3-5 лет</label>
-            <input type="radio" id="experience-3-5" name="experience" value="3-5" class="filter-form__input">
-            <label for="experience-5-plus" class="filter-form__label">5+ лет</label>
-            <input type="radio" id="experience-5-plus" name="experience" value="5+" class="filter-form__input">
-          </fieldset>
-
-          <fieldset class="filter-form__fieldset">
-            <legend class="filter-form__legend">Местоположение</legend>
-            <select name="location" id="location-select" class="filter-form__select">
-              <option value="">Выберите город</option>
-              <option value="moscow">Москва</option>
-              <option value="sanktpeterburg">Санкт-Петербург</option>
-              <option value="kazan">Казань</option>
-              <option value="ekaterinburg">Екатеринбург</option>
-            </select>
-          </fieldset>
-
-          <fieldset class="filter-form__fieldset">
-            <legend class="filter-form__legend">Стоимость занятий</legend>
-            <label for="cost-min" class="filter-form__label">От:</label>
-            <input type="number" id="cost-min" name="cost-min" min="0" placeholder="0" class="filter-form__input">
-            <label for="cost-max" class="filter-form__label">До:</label>
-            <input type="number" id="cost-max" name="cost-max" min="0" placeholder="5000" class="filter-form__input">
-          </fieldset>
-          <button type="submit" class="filter-form__button">Применить фильтры</button>
-        </form>
-
-        <h3 class="sort-options__heading">Сортировка</h3>
-        <button type="button" class="sort-options__button">Сортировать по рейтингу</button>
-        <button type="button" class="sort-options__button">Сортировать по популярности</button>
-      </aside>
-
-      <section class="reviews" id="reviews">
-        <h1 class="reviews__heading">Отзывы клиентов</h1>
-        <article class="review-item">
-          <h3 class="review-item__title">Отличный тренер!</h3>
-          <p class="review-item__author"><strong>От:</strong> Анна К.</p>
-          <p class="review-item__rating"><strong>Оценка:</strong> ⭐⭐⭐⭐⭐</p>
-          <p class="review-item__text">Иван Петров помог мне сбросить 10 кг за 3 месяца. Его подход к тренировкам и питанию очень эффективен. Рекомендую!</p>
-        </article>
-        <article class="review-item">
-          <h3 class="review-item__title">Йога с Еленой</h3>
-          <p class="review-item__author"><strong>От:</strong> Дмитрий Л.</p>
-          <p class="review-item__rating"><strong>Оценка:</strong> ⭐⭐⭐⭐</p>
-          <p class="review-item__text">Занятия йогой с Еленой очень расслабляют и помогают улучшить гибкость. Иногда хотелось бы больше динамики, но в целом очень доволен.</p>
-        </article>
-      </section>
-
-      <section class="booking" id="booking">
-        <h1 class="booking__heading">Запись на тренировку или консультацию</h1>
-        <form action="/book" method="post" class="booking-form">
-          <label for="name" class="booking-form__label">Ваше имя:</label>
-          <input id="name" type="text" name="name" required class="booking-form__input"><br>
-
-          <label for="email" class="booking-form__label">Ваш Email:</label>
-          <input id="email" type="email" name="email" required class="booking-form__input"><br>
-
-          <label for="phone" class="booking-form__label">Ваш телефон:</label>
-          <input id="phone" type="tel" name="phone" placeholder="+7 (XXX) XXX-XX-XX" class="booking-form__input"><br>
-
-          <label for="trainer-select" class="booking-form__label">Выберите тренера:</label>
-          <select name="trainer" id="trainer-select" required class="booking-form__select">
-            <option value="">Выберите тренера</option>
-            <option value="ivan-petrov">Иван Петров (Фитнес)</option>
-            <option value="elena-smirnova">Елена Смирнова (Йога)</option>
-          </select><br>
-
-          <label for="service-type" class="booking-form__label">Тип услуги:</label>
-          <select name="type" id="service-type" required class="booking-form__select">
-            <option value="consultation">Консультация</option>
-            <option value="trial-training">Пробная тренировка</option>
-            <option value="full-training">Полная тренировка</option>
-          </select><br>
-
-          <label for="date" class="booking-form__label">Предпочтительная дата:</label>
-          <input type="date" id="date" name="date" class="booking-form__input"><br>
-
-          <label for="time" class="booking-form__label">Предпочтительное время:</label>
-          <input type="time" id="time" name="time" class="booking-form__input"><br>
-
-          <label for="comments" class="booking-form__label">Комментарии:</label><br>
-          <textarea id="comments" name="comments" rows="5" cols="30" placeholder="Опишите свои цели или вопросы" class="booking-form__textarea"></textarea><br>
-
-          <button type="submit" class="booking-form__button">Записаться</button>
-        </form>
-      </section>
-
-      <section class="trainer-profile" id="trainer-profile-ivan">
-        <h1 class="trainer-profile__heading">Профиль тренера: Иван Петров</h1>
-        <article class="trainer-profile__content">
-          <figure class="trainer-profile__figure">
-            <img src="https://placehold.co/300x300/e0e0e0/000000?text=Иван+Петров+Полный" alt="Фото тренера Ивана Петрова" class="trainer-profile__image" width="300" height="300">
-            <figcaption class="trainer-profile__caption">Иван Петров - Ваш персональный тренер</figcaption>
-          </figure>
-          <h2 class="trainer-profile__name">Иван Петров</h2>
-          <p class="trainer-profile__specialization"><strong>Специализация:</strong> Фитнес-тренер, персональные тренировки, похудение, набор мышечной массы, функциональный тренинг.</p>
-          <p class="trainer-profile__experience"><strong>Опыт работы:</strong> 10 лет в индустрии фитнеса.</p>
-          <p class="trainer-profile__education"><strong>Образование:</strong> Высшее спортивное образование, сертифицированный специалист по питанию.</p>
-          <h3 class="trainer-profile__contacts-heading">Контакты:</h3>
-          <ul class="trainer-profile__contact-list">
-            <li class="trainer-profile__contact-item">Email: <a href="mailto:ivan.petrov@example.com" class="trainer-profile__contact-link">ivan.petrov@example.com</a></li>
-            <li class="trainer-profile__contact-item">Телефон: <a href="tel:+79991234567" class="trainer-profile__contact-link">+7 (999) 123-45-67</a></li>
-            <li class="trainer-profile__contact-item">Социальные сети:
-              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-instagram"></i> Instagram</a>,
-              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-facebook"></i> Facebook</a>
-            </li>
+    <div class="content content--hidden">
+      <header class="header">
+        <div class="header__logo">
+          <a href="#" class="header__logo-link">
+            <img src="https://placehold.co/150x50/cccccc/333333?text=Логотип" alt="Логотип Тренер-навигатор">
+          </a>
+        </div>
+        <nav class="header__navigation">
+          <ul class="header__navigation-list">
+            <li class="header__navigation-item"><a href="#trainers" class="header__navigation-link">Тренеры</a></li>
+            <li class="header__navigation-item"><a href="#articles" class="header__navigation-link">Статьи</a></li>
+            <li class="header__navigation-item"><a href="#about" class="header__navigation-link">О нас</a></li>
+            <li class="header__navigation-item"><a href="#contact" class="header__navigation-link">Контакты</a></li>
           </ul>
-          <h3 class="trainer-profile__schedule-heading">Расписание занятий:</h3>
-          <p class="trainer-profile__schedule-text">Доступен для персональных тренировок по будням с 9:00 до 20:00. Групповые занятия по расписанию (уточняйте).</p>
-          <h3 class="trainer-profile__reviews-heading">Отзывы:</h3>
-          <blockquote class="trainer-profile__quote">
-            <p class="trainer-profile__quote-text">"Иван помог мне полностью изменить свой образ жизни и достичь невероятных результатов. Очень профессиональный и мотивирующий тренер!"</p>
-            <cite class="trainer-profile__quote-cite">— Ольга С.</cite>
-          </blockquote>
-          <button type="button" class="trainer-profile__book-button">Записаться на тренировку к Ивану</button>
-        </article>
+        </nav>
+        <div class="header__search">
+          <input type="search" class="header__search-input" placeholder="Поиск тренера...">
+          <button class="header__search-button">Найти</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <aside class="filter-sidebar">
+          <h2 class="filter-sidebar__heading">Фильтры</h2>
+          <form class="filter-form">
+            <div class="filter-form__group">
+              <label for="specialization-select" class="filter-form__label">Специализация:</label>
+              <select id="specialization-select" class="filter-form__select">
+                <option value="">Все</option>
+                <option value="Фитнес">Фитнес</option>
+                <option value="Йога">Йога</option>
+                <option value="Плавание">Плавание</option>
+                <option value="Коучинг">Коучинг</option>
+              </select>
+            </div>
+            <div class="filter-form__group">
+              <label class="filter-form__label">Опыт:</label>
+              <div class="filter-form__radio-group">
+                <input type="radio" id="exp-any" name="experience" value="any" checked>
+                <label for="exp-any">Любой</label>
+                <input type="radio" id="exp-1-3" name="experience" value="1-3">
+                <label for="exp-1-3">1-3 года</label>
+                <input type="radio" id="exp-3-5" name="experience" value="3-5">
+                <label for="exp-3-5">3-5 лет</label>
+                <input type="radio" id="exp-5-plus" name="experience" value="5+">
+                <label for="exp-5-plus">5+ лет</label>
+              </div>
+            </div>
+            <div class="filter-form__group">
+              <label for="location-select" class="filter-form__label">Местоположение:</label>
+              <select id="location-select" class="filter-form__select">
+                <option value="">Любое</option>
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Казань">Казань</option>
+                <option value="Екатеринбург">Екатеринбург</option>
+              </select>
+            </div>
+            <div class="filter-form__group">
+              <label for="cost-min" class="filter-form__label">Стоимость (руб.):</label>
+              <input type="number" id="cost-min" class="filter-form__input" placeholder="От">
+              <input type="number" id="cost-max" class="filter-form__input" placeholder="До">
+            </div>
+            <button type="button" class="filter-form__button">Применить фильтры</button>
+          </form>
+        </aside>
+
+        <section id="trainers" class="trainers">
+          <h2 class="trainers__heading">Наши Тренеры</h2>
+          <div class="swiper-container">
+            <div class="swiper-wrapper" id="trainer-cards-container">
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+        </section>
+      </main>
+
+      <section id="trainer-titles-section" class="trainer-titles-section">
+        <h2 class="trainer-titles-section__heading">Список имен тренеров (динамически)</h2>
+        <ul id="trainer-titles-list" class="trainer-titles-list">
+        </ul>
       </section>
-      
-      <section class="trainer-profile" id="trainer-profile-elena">
-        <h1 class="trainer-profile__heading">Профиль тренера: Елена Смирнова</h1>
-        <article class="trainer-profile__content">
-          <figure class="trainer-profile__figure">
-            <img src="https://placehold.co/300x300/e0e0e0/000000?text=Елена+Смирнова+Полный" alt="Фото тренера Елены Смирновой" class="trainer-profile__image" width="300" height="300">
-            <figcaption class="trainer-profile__caption">Елена Смирнова - Ваш инструктор по йоге</figcaption>
-          </figure>
-          <h2 class="trainer-profile__name">Елена Смирнова</h2>
-          <p class="trainer-profile__specialization"><strong>Специализация:</strong> Йога (Хатха, Виньяса), Пилатес, Медитация, Стретчинг.</p>
-          <p class="trainer-profile__experience"><strong>Опыт работы:</strong> 7 лет преподавания.</p>
-          <p class="trainer-profile__education"><strong>Образование:</strong> Сертифицированный инструктор йоги (RYT 200), курсы по пилатесу и техникам медитации.</p>
-          <h3 class="trainer-profile__contacts-heading">Контакты:</h3>
-          <ul class="trainer-profile__contact-list">
-            <li class="trainer-profile__contact-item">Email: <a href="mailto:elena.smirnova@example.com" class="trainer-profile__contact-link">elena.smirnova@example.com</a></li>
-            <li class="trainer-profile__contact-item">Телефон: <a href="tel:+79997654321" class="trainer-profile__contact-link">+7 (999) 765-43-21</a></li>
-            <li class="trainer-profile__contact-item">Социальные сети:
-              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-instagram"></i> Instagram</a>,
-              <a href="#" class="trainer-profile__contact-link"><i class="fab fa-vk"></i> VKontakte</a>
-            </li>
+
+      <section id="popular-articles" class="articles">
+        <h2 class="articles__heading">Популярные Статьи (динамически)</h2>
+        <div id="articles-container">
+        </div>
+      </section>
+
+      <footer class="footer">
+        <nav class="footer__navigation">
+          <ul class="footer__navigation-list">
+            <li class="footer__navigation-item"><a href="#about" class="footer__navigation-link">О нас</a></li>
+            <li class="footer__navigation-item"><a href="#contact" class="footer__navigation-link">Контакты</a></li>
+            <li class="footer__navigation-item"><a href="#privacy" class="footer__navigation-link">Политика конфиденциальности</a></li>
           </ul>
-          <h3 class="trainer-profile__schedule-heading">Расписание занятий:</h3>
-          <p class="trainer-profile__schedule-text">Индивидуальные и групповые занятия. Утренние и вечерние классы. Свяжитесь для уточнения актуального расписания.</p>
-          <h3 class="trainer-profile__reviews-heading">Отзывы:</h3>
-          <blockquote class="trainer-profile__quote">
-            <p class="trainer-profile__quote-text">"Занятия с Еленой - это всегда заряд позитива и энергии! Она очень внимательный и грамотный инструктор."</p>
-            <cite class="trainer-profile__quote-cite">— Марина В.</cite>
-          </blockquote>
-          <button type="button" class="trainer-profile__book-button" data-trainer-name="Елена Смирнова">Записаться на занятие к Елене</button>
-        </article>
-      </section>
+        </nav>
+        <div class="footer__social">
+          <p class="footer__social-text">Следите за нами в социальных сетях:</p>
+          <ul class="footer__social-list">
+            <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-telegram"></i> Telegram</a></li>
+          </ul>
+        </div>
+        <div class="footer__team">
+          <p class="footer__team-heading">Команда проекта:</p>
+          <ul class="footer__team-list">
+            <li class="footer__team-member">Денисов Андрей (РК-42)</li>
+          </ul>
+        </div>
+        <p class="footer__copyright">© 2025 Тренер-навигатор. Все права защищены.</p>
+      </footer>
 
-      <section class="articles" id="articles">
-        <h1 class="articles__heading">Полезные статьи и советы</h1>
-        <article class="article-item">
-          <h2 class="article-item__title">Как правильно выбрать персонального тренера?</h2>
-          <p class="article-item__text">Выбор подходящего персонального тренера - это ключ к достижению ваших фитнес-целей. В этой статье мы расскажем, на что обратить внимание при поиске идеального наставника...</p>
-          <a href="#" class="article-item__link">Читать далее</a>
-        </article>
-        <article class="article-item">
-          <h2 class="article-item__title">5 мифов о похудении, в которые вы до сих пор верите</h2>
-          <p class="article-item__text">Существует множество заблуждений о том, как эффективно снижать вес. Разберем самые популярные мифы и расскажем, как на самом деле работает процесс похудения...</p>
-          <a href="#" class="article-item__link">Читать далее</a>
-        </article>
-      </section>
-    </main>
+      <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-    <footer class="footer">
-      <nav class="footer__navigation">
-        <ul class="footer__navigation-list">
-          <li class="footer__navigation-item"><a href="#about" class="footer__navigation-link">О нас</a></li>
-          <li class="footer__navigation-item"><a href="#contact" class="footer__navigation-link">Контакты</a></li>
-          <li class="footer__navigation-item"><a href="#privacy" class="footer__navigation-link">Политика конфиденциальности</a></li>
-        </ul>
-      </nav>
-      <div class="footer__social">
-        <p class="footer__social-text">Следите за нами в социальных сетях:</p>
-        <ul class="footer__social-list">
-          <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-facebook"></i> Facebook</a></li>
-          <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-instagram"></i> Instagram</a></li>
-          <li class="footer__social-item"><a href="#" class="footer__social-link"><i class="fab fa-telegram"></i> Telegram</a></li>
-        </ul>
-      </div>
-      <div class="footer__team">
-        <p class="footer__team-heading">Команда проекта:</p>
-        <ul class="footer__team-list">
-          <li class="footer__team-member">Денисов Андрей (РК-42)</li>
-        </ul>
-      </div>
-      <p class="footer__copyright">&copy; 2025 Тренер-навигатор. Все права защищены.</p>
-    </footer>
-    <script src="scripts/script.js"></script>
+    </div> <!-- Конец .content -->
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>
