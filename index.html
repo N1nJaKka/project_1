@@ -2,100 +2,223 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8">
-    <title>Название сайта</title>
-    <!-- Стили CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренер-навигатор</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
 
-    <!-- Шапка сайта -->
     <header>
-      <div class="logo">
-        <a href="#"><img src="logo.png" alt="Логотип"></a>
+      <div>
+        <a href="/">
+          <img src="https://placehold.co/150x50/cccccc/333333?text=Логотип" alt="Логотип Тренер-навигатор">
+        </a>
       </div>
       <nav>
         <ul>
-          <li><a href="#">Главная</a></li>
-          <li><a href="#">Тренеры</a></li>
-          <li><a href="#">Отзывы</a></li>
-          <li><a href="#">Запись на тренировку</a></li>
-          <li><a href="#">Статьи</a></li>
+          <li><a href="#main">Главная</a></li>
+          <li><a href="#trainers">Тренеры</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#booking">Запись на тренировку</a></li>
+          <li><a href="#articles">Статьи</a></li>
         </ul>
       </nav>
-      <!-- Поиск тренеров -->
-      <form action="#" method="get">
-        <input type="search" placeholder="Поиск тренеров" name="q">
+      <form action="/search" method="get">
+        <input type="search" placeholder="Поиск тренеров по имени или специализации" name="q" id="search-input">
+        <button type="submit">Найти</button>
       </form>
     </header>
 
-    <!-- Основное содержимое -->
-    <main>
-      <section>
-        <!-- Карточки тренеров -->
-        <article class="trainer-card">
+    <main id="main">
+      <section id="trainers">
+        <h1>Наши тренеры</h1>
+        <article>
           <figure>
-            <img src="..." alt="Фотография тренера">
+            <img src="https://placehold.co/200x200/e0e0e0/000000?text=Тренер+1" alt="Фотография тренера Ивана Петрова">
+            <figcaption>Иван Петров</figcaption>
           </figure>
-          <h2>Имя тренера</h2>
-          <p>Специализация: ...</p>
-          <p>Описание: ...</p>
+          <h2>Иван Петров</h2>
+          <p><strong>Специализация:</strong> Фитнес-тренер, персональные тренировки, похудение</p>
+          <p><strong>Опыт:</strong> 10 лет</p>
+          <p><strong>Местоположение:</strong> Москва, Центр</p>
+          <p><strong>Стоимость занятий:</strong> От 2000 руб./час</p>
+          <p><strong>Описание:</strong> Иван - сертифицированный фитнес-тренер с десятилетним опытом работы. Помогает клиентам достигать своих целей в фитнесе, будь то набор мышечной массы, похудение или улучшение общей физической формы. Разрабатывает индивидуальные программы тренировок и питания.</p>
+          <a href="#trainer-profile-ivan">Подробнее о тренере</a>
         </article>
-        <!-- Другие карточки тренеров -->
+
+        <article>
+          <figure>
+            <img src="https://placehold.co/200x200/e0e0e0/000000?text=Тренер+2" alt="Фотография тренера Елены Смирновой">
+            <figcaption>Елена Смирнова</figcaption>
+          </figure>
+          <h2>Елена Смирнова</h2>
+          <p><strong>Специализация:</strong> Йога, пилатес, медитация</p>
+          <p><strong>Опыт:</strong> 7 лет</p>
+          <p><strong>Местоположение:</strong> Санкт-Петербург, Петроградский район</p>
+          <p><strong>Стоимость занятий:</strong> От 1500 руб./час</p>
+          <p><strong>Описание:</strong> Елена - опытный инструктор по йоге и пилатесу. Её занятия направлены на улучшение гибкости, силы и ментального здоровья. Проводит как групповые, так и индивидуальные сессии.</p>
+          <a href="#trainer-profile-elena">Подробнее о тренере</a>
+        </article>
+      </section>
+
+      <aside>
+        <h3>Фильтрация тренеров</h3>
+        <form>
+          <fieldset>
+            <legend>Опыт</legend>
+            <label for="experience-any">Любой</label>
+            <input type="radio" id="experience-any" name="experience" value="any" checked>
+            <label for="experience-1-3">1-3 года</label>
+            <input type="radio" id="experience-1-3" name="experience" value="1-3">
+            <label for="experience-3-5">3-5 лет</label>
+            <input type="radio" id="experience-3-5" name="experience" value="3-5">
+            <label for="experience-5-plus">5+ лет</label>
+            <input type="radio" id="experience-5-plus" name="experience" value="5+">
+          </fieldset>
+
+          <fieldset>
+            <legend>Местоположение</legend>
+            <select name="location" id="location-select">
+              <option value="">Выберите город</option>
+              <option value="moscow">Москва</option>
+              <option value="sanktpeterburg">Санкт-Петербург</option>
+              <option value="kazan">Казань</option>
+              <option value="ekaterinburg">Екатеринбург</option>
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Стоимость занятий</legend>
+            <label for="cost-min">От:</label>
+            <input type="number" id="cost-min" name="cost-min" min="0" placeholder="0">
+            <label for="cost-max">До:</label>
+            <input type="number" id="cost-max" name="cost-max" min="0" placeholder="5000">
+          </fieldset>
+          <button type="submit">Применить фильтры</button>
+        </form>
+
+        <h3>Сортировка</h3>
+        <button>Сортировать по рейтингу</button>
+        <button>Сортировать по популярности</button>
+      </aside>
+
+      <section id="reviews">
+        <h1>Отзывы клиентов</h1>
+        <article>
+          <h3>Отличный тренер!</h3>
+          <p><strong>От:</strong> Анна К.</p>
+          <p><strong>Оценка:</strong> ⭐⭐⭐⭐⭐</p>
+          <p>Иван Петров помог мне сбросить 10 кг за 3 месяца. Его подход к тренировкам и питанию очень эффективен. Рекомендую!</p>
+        </article>
+        <article>
+          <h3>Йога с Еленой</h3>
+          <p><strong>От:</strong> Дмитрий Л.</p>
+          <p><strong>Оценка:</strong> ⭐⭐⭐⭐</p>
+          <p>Занятия йогой с Еленой очень расслабляют и помогают улучшить гибкость. Иногда хотелось бы больше динамики, но в целом очень доволен.</p>
+        </article>
+      </section>
+
+      <section id="booking">
+        <h1>Запись на тренировку или консультацию</h1>
+        <form action="/book" method="post">
+          <label for="name">Ваше имя:</label>
+          <input id="name" type="text" name="name" required><br>
+
+          <label for="email">Ваш Email:</label>
+          <input id="email" type="email" name="email" required><br>
+
+          <label for="phone">Ваш телефон:</label>
+          <input id="phone" type="tel" name="phone" placeholder="+7 (XXX) XXX-XX-XX"><br>
+
+          <label for="trainer-select">Выберите тренера:</label>
+          <select name="trainer" id="trainer-select" required>
+            <option value="">Выберите тренера</option>
+            <option value="ivan-petrov">Иван Петров (Фитнес)</option>
+            <option value="elena-smirnova">Елена Смирнова (Йога)</option>
+          </select><br>
+
+          <label for="service-type">Тип услуги:</label>
+          <select name="type" id="service-type" required>
+            <option value="consultation">Консультация</option>
+            <option value="trial-training">Пробная тренировка</option>
+            <option value="full-training">Полная тренировка</option>
+          </select><br>
+
+          <label for="date">Предпочтительная дата:</label>
+          <input type="date" id="date" name="date"><br>
+
+          <label for="time">Предпочтительное время:</label>
+          <input type="time" id="time" name="time"><br>
+
+          <label for="comments">Комментарии:</label><br>
+          <textarea id="comments" name="comments" rows="5" cols="30" placeholder="Опишите свои цели или вопросы"></textarea><br>
+
+          <button type="submit">Записаться</button>
+        </form>
+      </section>
+
+      <section id="trainer-profile-ivan">
+        <h1>Профиль тренера: Иван Петров</h1>
+        <article>
+          <figure>
+            <img src="https://placehold.co/300x300/e0e0e0/000000?text=Иван+Петров" alt="Фото тренера Ивана Петрова">
+            <figcaption>Иван Петров - Ваш персональный тренер</figcaption>
+          </figure>
+          <h2>Иван Петров</h2>
+          <p><strong>Специализация:</strong> Фитнес-тренер, персональные тренировки, похудение, набор мышечной массы, функциональный тренинг.</p>
+          <p><strong>Опыт работы:</strong> 10 лет в индустрии фитнеса.</p>
+          <p><strong>Образование:</strong> Высшее спортивное образование, сертифицированный специалист по питанию.</p>
+          <h3>Контакты:</h3>
+          <ul>
+            <li>Email: <a href="mailto:ivan.petrov@example.com">ivan.petrov@example.com</a></li>
+            <li>Телефон: +7 (XXX) XXX-XX-XX</li>
+            <li>Социальные сети: <a href="#">Instagram</a>, <a href="#">Facebook</a></li>
+          </ul>
+          <h3>Расписание занятий:</h3>
+          <p>Доступен для персональных тренировок по будням с 9:00 до 20:00. Групповые занятия по расписанию (уточняйте).</p>
+          <p><strong>Отзывы:</strong></p>
+          <blockquote>
+            <p>"Иван помог мне полностью изменить свой образ жизни и достичь невероятных результатов. Очень профессиональный и мотивирующий тренер!"</p>
+            <cite>— Ольга С.</cite>
+          </blockquote>
+          <button>Записаться на тренировку к Ивану</button>
+        </article>
+      </section>
+
+      <section id="articles">
+        <h1>Полезные статьи и советы</h1>
+        <article>
+          <h2>Как правильно выбрать персонального тренера?</h2>
+          <p>Выбор подходящего персонального тренера - это ключ к достижению ваших фитнес-целей. В этой статье мы расскажем, на что обратить внимание при поиске идеального наставника...</p>
+          <a href="#">Читать далее</a>
+        </article>
+        <article>
+          <h2>5 мифов о похудении, в которые вы до сих пор верите</h2>
+          <p>Существует множество заблуждений о том, как эффективно снижать вес. Разберем самые популярные мифы и расскажем, как на самом деле работает процесс похудения...</p>
+          <a href="#">Читать далее</a>
+        </article>
       </section>
     </main>
 
-    <!-- Фильтрация и сортировка -->
-    <aside>
-      <h3>Фильтрация тренеров</h3>
-      <ul>
-        <li>Опыт: ...</li>
-        <li>Местоположение: ...</li>
-        <li>Стоимость занятий: ...</li>
-      </ul>
-      <button>Сортировать по рейтингу</button>
-      <button>Сортировать по популярности</button>
-    </aside>
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#contact">Контакты</a></li>
+          <li><a href="#privacy">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p>Следите за нами в социальных сетях:</p>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+      <p>&copy; 2025 Тренер-навигатор. Все права защищены.</p>
+    </footer>
 
-    <!-- Отзывы и рейтинги -->
-    <section>
-      <h1>Отзывы клиентов</h1>
-      <!-- Отзывы -->
-      <p>... </p>
-      <!-- Рейтинги тренеров -->
-    </section>
-
-    <!-- Запись на тренировку -->
-    <form action="..." method="post">
-      <label for="name">Имя:</label>
-      <input id="name" type="text" name="name"><br>
-      <label for="email">Email:</label>
-      <input id="email" type="email" name="email"><br>
-      <label for="phone">Телефон:</label>
-      <input id="phone" type="tel" name="phone"><br>
-      <select name="type">
-        <option value="consultation">Консультация</option>
-        <option value="trial-training">Пробная тренировка</option>
-      </select>
-      <button type="submit">Записаться</button>
-    </form>
-
-    <!-- Профиль тренера -->
-    <article>
-      <figure>
-        <img src="..." alt="Фото тренера">
-      </figure>
-      <h2>Профиль тренера</h2>
-      <p>Имя: ...</p>
-      <p>Контакты: ...</p>
-      <p>Расписание занятий: ...</p>
-    </article>
-
-    <!-- Статьи и советы -->
-    <section>
-      <h1>Полезные статьи</h1>
-      <!-- Статьи -->
-      <article>...</article>
-      <!-- Советы -->
-    </section>
   </body>
 </html>
