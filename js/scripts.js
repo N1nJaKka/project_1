@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Файл script.js для 'Тренер-навигатор' загружен, DOM готов!");
-
     const preloader = document.querySelector('.preloader');
     const content = document.querySelector('.content');
 
@@ -15,9 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     setTimeout(hidePreloader, 1500);
-
     window.addEventListener('load', hidePreloader);
-
 
     const filterForm = document.querySelector('.filter-form');
     const experienceFilters = filterForm ? filterForm.querySelectorAll('input[name="experience"]') : [];
@@ -38,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
             costMax: costMaxFilter ? costMaxFilter.value : ''
         };
         localStorage.setItem('trainerFilters', JSON.stringify(filters));
-        console.log("Фильтры сохранены в LocalStorage:", filters);
     }
 
     function loadFiltersFromLocalStorage() {
@@ -57,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     radio.checked = true;
                 }
             });
-            console.log("Фильтры загружены из LocalStorage:", filters);
         }
     }
 
@@ -68,10 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
         filterForm.addEventListener('input', saveFiltersToLocalStorage);
     }
 
-
     const trainerCardsContainer = document.getElementById('trainer-cards-container');
     const trainerTitlesList = document.getElementById('trainer-titles-list');
     let allTrainerCardsData = [];
+
     async function loadTrainers() {
         try {
             const response = await fetch('data.json');
@@ -79,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
             allTrainerCardsData = await response.json();
-            console.log("Данные о тренерах загружены:", allTrainerCardsData);
 
             renderTrainerCards(allTrainerCardsData);
             extractAndDisplayTrainerTitles(allTrainerCardsData);
             initializeSwiper();
+
         } catch (error) {
             console.error("Не удалось загрузить данные о тренерах:", error);
             if (trainerCardsContainer) {
@@ -139,14 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 listItem.textContent = name;
                 trainerTitlesList.appendChild(listItem);
             });
-            console.log("Массив имен тренеров:", trainerNames);
         } else {
             const listItem = document.createElement('li');
             listItem.textContent = "Имена тренеров не найдены.";
             trainerTitlesList.appendChild(listItem);
         }
     }
-
 
     const popularArticlesContainer = document.getElementById('articles-container');
 
@@ -185,15 +177,13 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             popularArticlesContainer.appendChild(articleItem);
         });
-        console.log("Динамический блок статей сформирован.");
     }
-
 
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
     window.addEventListener('scroll', function() {
         if (scrollToTopBtn) {
-            if (window.pageYOffset > 300) { 
+            if (window.pageYOffset > 300) {
                 scrollToTopBtn.style.display = 'block';
             } else {
                 scrollToTopBtn.style.display = 'none';
@@ -207,7 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 top: 0,
                 behavior: 'smooth'
             });
-            console.log("Кнопка 'Наверх' нажата.");
         });
     }
 
@@ -220,56 +209,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (trainerCardsContainer && trainerCardsContainer.children.length > 0) {
             mySwiper = new Swiper('.swiper-container', {
-                loop: true, // Бесконечная прокрутка
-                slidesPerView: 1, // Показываем по одной карточке по умолчанию
-                spaceBetween: 20, // Расстояние между слайдами
-
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 20,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
-
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-
                 scrollbar: {
                     el: '.swiper-scrollbar',
                 },
-
                 breakpoints: {
-                    // when window width is >= 640px
                     640: {
                         slidesPerView: 2,
                         spaceBetween: 30
                     },
-                    // when window width is >= 1024px
                     1024: {
                         slidesPerView: 3,
                         spaceBetween: 40
                     }
                 }
             });
-            console.log("Swiper инициализирован.");
-        } else {
-            console.log("Нет карточек тренеров для инициализации Swiper.");
         }
     }
-
 
     const searchButton = document.querySelector('.header__search-button');
     if (searchButton) {
         searchButton.addEventListener('click', function(event) {
-            // event.preventDefault(); // Раскомментируйте, если хотите предотвратить стандартную отправку формы для теста
-            console.log("Кнопка поиска в шапке нажата!");
         });
     }
 
     if (applyFiltersButton) {
         applyFiltersButton.addEventListener('click', function(event) {
             event.preventDefault();
-            console.log("Кнопка 'Применить фильтры' нажата!");
             const selectedSpecialization = specializationSelect ? specializationSelect.value : '';
             const selectedExperience = Array.from(experienceFilters).find(radio => radio.checked)?.value || 'any';
             const selectedLocation = locationFilter ? locationFilter.value : '';
@@ -312,7 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
-                console.log(`Нажата ссылка "Подробнее о тренере" для: ${targetId}`);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -320,24 +295,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    const navigationLinks = document.querySelectorAll('.header__navigation-link, .footer__navigation-link');
+
+    navigationLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                event.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
 
     document.body.addEventListener('mouseover', function(event) {
         const trainerCard = event.target.closest('.trainer-card');
         if (trainerCard) {
             const trainerNameElement = trainerCard.querySelector('.trainer-card__name');
-            const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
-            console.log(`Мышь наведена на карточку тренера: ${trainerName}`);
+            const trainerName = trainerNameElement ? trainerNameElement.textContent : '';
         }
     });
+
     document.body.addEventListener('mouseout', function(event) {
         const trainerCard = event.target.closest('.trainer-card');
         if (trainerCard) {
             const trainerNameElement = trainerCard.querySelector('.trainer-card__name');
-            const trainerName = trainerNameElement ? trainerNameElement.textContent : 'Неизвестный тренер';
-            // console.log(`Мышь убрана с карточки тренера: ${trainerName}`); // Раскомментируйте, если нужно
+            const trainerName = trainerNameElement ? trainerNameElement.textContent : '';
         }
     });
-
 
     loadTrainers();
     renderPopularArticles();
