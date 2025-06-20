@@ -15,159 +15,8 @@
 
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <style>
-      .preloader {
-        position: fixed;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background: #fff;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-      }
-
-      .preloader--hidden {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid rgba(0, 0, 0, 0.1);
-        border-top-color: #007bff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .content {
-        transition: opacity 0.5s ease-in-out;
-      }
-
-      .content--hidden {
-        opacity: 0;
-      }
-
-      .scroll-to-top-btn {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s ease, opacity 0.3s ease;
-      }
-
-      .scroll-to-top-btn:hover {
-        background-color: #0056b3;
-      }
-
-      .trainer-titles-section {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 30px;
-      }
-
-      .trainer-titles-section__heading {
-        text-align: center;
-        color: #28a745;
-        margin-bottom: 15px;
-      }
-
-      .trainer-titles-list {
-        list-style: disc;
-        padding-left: 20px;
-      }
-
-      .trainer-titles-list__item {
-        margin-bottom: 5px;
-      }
-
-      .swiper-container {
-        width: 100%;
-        height: auto;
-        padding-bottom: 40px;
-      }
-
-      .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #eee;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      @media (max-width: 768px) {
-        .swiper-slide {
-          height: auto;
-        }
-      }
-
-      .section-padding {
-        padding: 60px 20px;
-        margin-bottom: 30px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      .section-padding h2 {
-        text-align: center;
-        color: #2c3e50;
-        margin-bottom: 30px;
-        font-size: 2.2rem;
-      }
-      .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        max-width: 600px;
-        margin: 0 auto;
-        text-align: left;
-      }
-      .contact-info p {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .contact-info i {
-        color: #007bff;
-        font-size: 1.2em;
-      }
-      .about-content {
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.8;
-        text-align: justify;
-      }
-      .about-content h3 {
-        color: #28a745;
-        margin-top: 25px;
-        margin-bottom: 15px;
-      }
-    </style>
+    <link rel="stylesheet" href="styles/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="styles/swiper-bundle.min.css">
   </head>
   <body>
     <div class="preloader">
@@ -177,7 +26,7 @@
     <div class="content content--hidden">
       <header class="header">
         <div class="header__logo">
-          <a href="#" class="header__logo-link">
+          <a href="index.html" class="header__logo-link">
             <img src="images/unnamed.png" alt="Логотип Тренер-навигатор" width="180" height="60">
           </a>
         </div>
@@ -219,7 +68,7 @@
                 <input type="radio" id="exp-3-5" name="experience" value="3-5">
                 <label for="exp-3-5">3-5 лет</label>
                 <input type="radio" id="exp-5-plus" name="experience" value="5+">
-                <label for="exp-5-plus">5+ лет</label>
+                <label for="exp-5-plus">5+ лет</slabel>
               </div>
             </div>
             <div class="filter-form__group">
@@ -245,6 +94,7 @@
           <h2 class="trainers__heading">Наши Тренеры</h2>
           <div class="swiper-container">
             <div class="swiper-wrapper" id="trainer-cards-container">
+              
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-next"></div>
@@ -296,7 +146,7 @@
         </div>
       </section>
 
-      <footer class="footer">
+      <footer>
         <nav class="footer__navigation">
           <ul class="footer__navigation-list">
             <li class="footer__navigation-item"><a href="#about" class="footer__navigation-link">О нас</a></li>
@@ -323,9 +173,9 @@
 
       <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-    </div>
+    </div> 
 
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="js/swiper-bundle.min.js"></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>
